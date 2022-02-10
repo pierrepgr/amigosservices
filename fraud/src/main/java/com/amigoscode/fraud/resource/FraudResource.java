@@ -1,6 +1,6 @@
 package com.amigoscode.fraud.resource;
 
-import com.amigoscode.fraud.dto.FraudCheckResponse;
+import com.amigoscode.clients.fraud.FraudCheckResponse;
 import com.amigoscode.fraud.service.FraudCheckService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

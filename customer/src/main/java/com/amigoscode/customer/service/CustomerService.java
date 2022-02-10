@@ -1,14 +1,14 @@
 package com.amigoscode.customer.service;
 
+import com.amigoscode.clients.fraud.FraudCheckResponse;
+import com.amigoscode.clients.fraud.FraudClient;
 import com.amigoscode.customer.dto.CustomerRequest;
-import com.amigoscode.customer.dto.FraudCheckResponse;
 import com.amigoscode.customer.model.Customer;
 import com.amigoscode.customer.repository.Customers;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 @Service
-public record CustomerService(Customers customers, RestTemplate restTemplate) {
+public record CustomerService(Customers customers, FraudClient fraudClient) {
 
     public void registerCustomer(CustomerRequest customerRequest) {
         Customer customer = Customer.builder()
@@ -19,10 +19,7 @@ public record CustomerService(Customers customers, RestTemplate restTemplate) {
 
         this.customers.saveAndFlush(customer);
 
-        FraudCheckResponse fraudCheckResponse = this.restTemplate.getForObject(
-                "http://FRAUD/api/v1/frauds/{customerId}",
-                FraudCheckResponse.class,
-                customer.getId());
+        FraudCheckResponse fraudCheckResponse = this.fraudClient.isFraudster(customer.getId());
 
         if (fraudCheckResponse.isFraudster()) {
             throw new IllegalStateException("fraudster");
