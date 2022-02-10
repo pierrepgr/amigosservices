@@ -20,7 +20,7 @@ public record CustomerService(Customers customers, RestTemplate restTemplate) {
         this.customers.saveAndFlush(customer);
 
         FraudCheckResponse fraudCheckResponse = this.restTemplate.getForObject(
-                "http://localhost:8081/api/v1/frauds/{customerId}",
+                "http://FRAUD/api/v1/frauds/{customerId}",
                 FraudCheckResponse.class,
                 customer.getId());
 
