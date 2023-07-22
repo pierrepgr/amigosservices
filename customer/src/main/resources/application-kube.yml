@@ -1,13 +1,13 @@
 server:
-  port: 8081
+  port: 8080
   servlet:
     context-path: /api
 
 spring:
   application:
-    name: fraud
+    name: customer
   datasource:
-    url: jdbc:postgresql://localhost:5432/fraud
+    url: jdbc:postgresql://postgres:5432/customer
     username: reinosoft
     password: 12345
   jpa:
@@ -17,15 +17,10 @@ spring:
         format_sql: true
         enable_lazy_load_no_trans: false
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show_sql: true
     open-in-view: false
   zipkin:
-    base-url: http://localhost:9411
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka
-    fetch-registry: true
-    register-with-eureka: true
-    enabled: false
+    base-url: http://zipkin:9411
+  rabbitmq:
+    addresses: rabbitmq:5672

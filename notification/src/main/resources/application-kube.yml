@@ -1,13 +1,13 @@
 server:
-  port: 8080
+  port: 8082
   servlet:
     context-path: /api
 
 spring:
   application:
-    name: customer
+    name: notification
   datasource:
-    url: jdbc:postgresql://localhost:5432/customer
+    url: jdbc:postgresql://postgres:5432/notification
     username: reinosoft
     password: 12345
   jpa:
@@ -17,18 +17,18 @@ spring:
         format_sql: true
         enable_lazy_load_no_trans: false
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show_sql: true
     open-in-view: false
   zipkin:
-    base-url: http://localhost:9411
+    base-url: http://zipkin:9411
   rabbitmq:
-    addresses: localhost:5672
+    addresses: rabbitmq:5672
 
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka
-    fetch-registry: true
-    register-with-eureka: true
-    enabled: false
+rabbitmq:
+  exchanges:
+    internal: internal.exchange
+  queue:
+    notification: notification.queue
+  routing-keys:
+    internal-notification: internal.notification.routing-key

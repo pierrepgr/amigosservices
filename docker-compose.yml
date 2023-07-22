@@ -31,30 +31,30 @@ services:
     networks:
       - spring
 
-  eureka-server:
-    image: reinosoft/eureka-server:latest
-    container_name: eureka-server
-    ports:
-      - "8761:8761"
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    networks:
-      - spring
-    depends_on:
-      - zipkin
+#  eureka-server:
+#    image: reinosoft/eureka-server:latest
+#    container_name: eureka-server
+#    ports:
+#      - "8761:8761"
+#    environment:
+#      - SPRING_PROFILES_ACTIVE=docker
+#    networks:
+#      - spring
+#    depends_on:
+#      - zipkin
 
-  gateway:
-    image: reinosoft/gateway:latest
-    container_name: gateway
-    ports:
-      - "8083:8083"
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    networks:
-      - spring
-    depends_on:
-      - zipkin
-      - eureka-server
+#  gateway:
+#    image: reinosoft/gateway:latest
+#    container_name: gateway
+#    ports:
+#      - "8083:8083"
+#    environment:
+#      - SPRING_PROFILES_ACTIVE=docker
+#    networks:
+#      - spring
+#    depends_on:
+#      - zipkin
+#      - eureka-server
 
   customer:
     image: reinosoft/customer:latest
@@ -68,9 +68,7 @@ services:
       - spring
     depends_on:
       - zipkin
-      - eureka-server
       - postgres
-      - gateway
       - rabbitmq
 
   fraud:
@@ -85,9 +83,7 @@ services:
       - spring
     depends_on:
       - zipkin
-      - eureka-server
       - postgres
-      - gateway
       - rabbitmq
 
   notification:
@@ -102,9 +98,7 @@ services:
       - spring
     depends_on:
       - zipkin
-      - eureka-server
       - postgres
-      - gateway
       - rabbitmq
 
 networks:
